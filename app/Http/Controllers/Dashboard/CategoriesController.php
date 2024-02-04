@@ -7,6 +7,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Models\Catergory;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
     use Illuminate\Support\Str;
@@ -19,6 +20,9 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        if(!Gate::allows('categories.view')){
+            abort(403);
+        }
         //
         $request=request();
         $categories = Catergory::with('parent')
@@ -47,6 +51,9 @@ class CategoriesController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('categories.create')) {
+            abort(403);
+        }
         //
         $parents=Catergory::all();
         $category=new Catergory();
@@ -62,6 +69,7 @@ class CategoriesController extends Controller
 
     public function store(Request $request)
     {
+        Gate::authorize('categories.create');
         //
         // $category=new Catergory();
         // $category->name=$request->name;
@@ -95,12 +103,15 @@ class CategoriesController extends Controller
      */
     public function show(Catergory $category)
     {
+        if (Gate::denies('categories.view')) {
+            abort(403);
+        }
         return view('dashboard.categories.show',[
             'category'=>$category
         ]);
     }
 
-    /** 
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -108,6 +119,7 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
+        Gate::authorize('categories.view');
         try{
         $category=Catergory::findOrFail($id);
         }
@@ -165,7 +177,7 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Gate::authorize('categories.delete');
         // $category = Catergory::findOrFail($id);
         // $category->delete();
 

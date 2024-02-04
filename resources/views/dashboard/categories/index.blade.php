@@ -9,7 +9,9 @@
 @section('content')
 
 <div class="mb-5">
+    @can('categories.create')
     <a href="{{route('dashboard.categories.create')}}" class="btn btn-sm btn-outline-primary ">Create</a>
+    @endcan
     <a href="{{route('dashboard.categories.trash')}}" class="btn btn-sm btn-outline-dark">Trash</a>
 </div>
 <x-alert type="success" />
@@ -42,15 +44,18 @@
         <tr>
             <th><img src="{{asset('storage/' . $category->image)}}" alt="" height="50"></th>
             <td>{{$category->id}}</td>
-            
+
             <td><a href="{{route('dashboard.categories.show',$category->id)}}">{{$category->name}}</a></td>
             <td>{{$category->parent->name}}</td>
             <td>{{$category->products_count}}</td>
             <td>{{$category->status}}</td>
             <td>{{$category->created_at}}</td>
+            @can('categories.update')
             <td>
                 <a href="{{route('dashboard.categories.edit',$category->id)}}" class="btn btn-sm btn-outline-success">Edit</a>
             </td>
+            @endcan
+            @can('categories.delete')
             <td>
                 <!-- Form method spoofing -->
                 <form action="{{route('dashboard.categories.destroy',$category->id)}}" method="post">
@@ -60,6 +65,7 @@
                     <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                 </form>
             </td>
+            @endcan
         </tr>
         @empty
         <tr>

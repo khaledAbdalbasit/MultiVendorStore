@@ -9,24 +9,33 @@ return [
     ]
 ,
     [
-        'icon'=>'far fa-circle nav-icon',
+        'icon' => 'fas fa-tags nav-icon',
         'route'=>'dashboard.categories.index',
         'title'=>'Categorries',
         'badge'=>'New',
-        'active' => 'dashboard.categories.*'
+        'active' => 'dashboard.categories.*',
+        'ability' => 'categories.view',
     ]
 ,
     [
-        'icon' => 'far fa-circle nav-icon',
-        'route' => 'dashboard.categories.index',
-        'title' => 'Product',
-        'active' => 'dashboard.products.*'
-    ]
-,
+        'icon' => 'fas fa-box nav-icon',
+        'route' => 'dashboard.products.index',
+        'title' => 'Products',
+        'active' => 'dashboard.products.*',
+        'ability' => 'products.view',
+    ],
     [
-        'icon' => 'far fa-circle nav-icon',
+        'icon' => 'fas fa-receipt nav-icon',
         'route' => 'dashboard.categories.index',
-        'title' => 'Order',
-        'active' => 'dashboard.orders.*'
-    ]
+        'title' => 'Orders',
+        'active' => 'dashboard.orders.*',
+        'ability' => 'orders.view',
+    ],
+    [
+        'icon' => 'fas fa-receipt nav-icon',
+        'route' => 'dashboard.roles.index',
+        'title' => 'Roles',
+        'active' => 'dashboard.roles.*',
+        'ability' => 'roles.view',
+    ],
 ];

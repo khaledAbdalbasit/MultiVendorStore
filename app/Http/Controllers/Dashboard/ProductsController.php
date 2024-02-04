@@ -61,8 +61,8 @@ class ProductsController extends Controller
 
         }
         $product = Product::create($data);
-        return Product::route('dashboard.products.index')
-        ->with('success', 'Category created!');// Massage for user
+        return Redirect::route('dashboard.products.index')
+        ->with('success', 'Product Created!');
     }
 
     /**
@@ -154,7 +154,14 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->delete();
+        // if($category->image)
+        // {
+        //     Storage::disk('public')->delete($category->image);
+        // }
+        return Redirect::route('dashboard.products.index')
+        ->with('success', 'Product deleted!');
     }
 
     protected function uploadImage(Request $request)
